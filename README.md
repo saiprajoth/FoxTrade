@@ -1,4 +1,4 @@
-# FoxTrade <img width="17.4" height="25" alt="foxtrade-logo" src="./assets/foxtrade-icon.png" />
+# FoxTrade <img width="22.9" height="33" alt="foxtrade-logo" src="./assets/foxtrade-icon.png" />
 
 <p align="center">
   <img width="760" alt="FoxTrade full logo" src="./assets/foxtrade-full-logo.png" />
@@ -133,8 +133,41 @@ In case the above link is not working, please find the demo of the application a
 - Docker
 - Docker Compose
 
-### Clone the repository
 
-```bash
-git clone <repository-url>
-cd foxtrade
+
+### Installation
+
+- Option 1 : get the dockerized version of app, find the image link below. Pull the image into your machine and run `turbo run dev`.
+
+
+
+- Option 2 : kindly clone the repository and run the commands in the root folder `npm install`, `turbo run dev`
+
+
+## .env.example exists?
+
+- yes, the .env.example exists to let the users know the environment variables being used in the project.
+
+
+## Tests
+
+- tests have been integrated, please follow the below instructions to check the tests :
+
+## Architectural Design Record (ADR) :
+
+<img width="1448" height="1086" alt="6f04ec06-666b-433d-9b5f-450825b890d7" src="https://github.com/user-attachments/assets/ac6d853d-5627-4aae-af0f-0336957b04b8" />
+
+## TradeOffs evaluation :
+
+- Tradeoffs for the project.
+
+## Limitations for the project :
+
+- No limitations
+
+
+
+
+
+
+
