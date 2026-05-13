@@ -153,10 +153,14 @@ In case the above link is not working, please find the demo of the application a
 
 - tests have been integrated, please follow the below instructions to check the tests :
 
-## Architectural Design Record (ADR) :
+## Architecture Diagram:
 
 <img width="1448" height="1086" alt="6f04ec06-666b-433d-9b5f-450825b890d7" src="https://github.com/user-attachments/assets/ac6d853d-5627-4aae-af0f-0336957b04b8" />
 
+## Architectural Design Record (ADR) :
+
+- Please find the link for ADRs for the chessX Project attached below :
+  
 ## TradeOffs evaluation :
 
 - Tradeoffs for the project.
