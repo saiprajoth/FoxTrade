@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: foxtrade-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: foxtrade
+      POSTGRES_PASSWORD: foxtrade
+      POSTGRES_DB: foxtrade
+    ports:
+      - "5432:5432"
+    volumes:
+      - foxtrade_postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: foxtrade-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - foxtrade_redis_data:/data
+
+volumes:
+  foxtrade_postgres_data:
+  foxtrade_redis_data:
