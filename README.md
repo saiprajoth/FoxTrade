@@ -165,7 +165,7 @@ In case the above link is not working, please find the demo of the application a
 
 ## Architectural Design Records (ADRs) :
 
-- Please find the [FoxTrade Project ADRs](./docs/ADRs) documentation here
+- Please find the [FoxTrade Project ADRs](./apps/docs/ADRs) documentation here
   
 ## TradeOffs evaluation :
 
