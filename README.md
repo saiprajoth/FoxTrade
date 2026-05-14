@@ -155,9 +155,12 @@ In case the above link is not working, please find the demo of the application a
 
 ## Architecture Diagram:
 
-![Uploading 7e9568ee-3ce8-45f2-87d1-e63fda8694ef.png…]()
+
 
 <img width="1491" height="1055" alt="f7e1d39b-4cb7-4f95-a9f1-9810e97abd2b" src="https://github.com/user-attachments/assets/a8673d6a-adbd-4748-9c1d-183696d97372" />
+
+<img width="1491" height="1055" alt="7e9568ee-3ce8-45f2-87d1-e63fda8694ef" src="https://github.com/user-attachments/assets/323fdb7f-7715-4d50-ba98-5c2a2c13e518" />
+
 
 
 ## Architectural Design Records (ADRs) :
