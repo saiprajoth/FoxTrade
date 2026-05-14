@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum AssetType {
+  FIAT
+  CRYPTO
+  STOCK
+}
+
+enum LedgerEntryType {
+  INITIAL_DEPOSIT
+  CASH_DEPOSIT
+  ASSET_DEPOSIT
+
+  RESERVE_FOR_BUY_ORDER
+  RESERVE_FOR_SELL_ORDER
+
+  RELEASE_RESERVED_CASH
+  RELEASE_RESERVED_ASSET
+
+  TRADE_DEBIT_CASH
+  TRADE_CREDIT_CASH
+  TRADE_DEBIT_ASSET
+  TRADE_CREDIT_ASSET
+
+  ADJUSTMENT
+}
+
+model LedgerEntry {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId  String @map("user_id") @db.Uuid
+  assetId String @map("asset_id") @db.Uuid
+
+  type LedgerEntryType
+
+  availableDelta Decimal @map("available_delta") @db.Decimal(36, 18)
+  reservedDelta  Decimal @map("reserved_delta") @db.Decimal(36, 18)
+
+  availableBalanceAfter Decimal? @map("available_balance_after") @db.Decimal(36, 18)
+  reservedBalanceAfter  Decimal? @map("reserved_balance_after") @db.Decimal(36, 18)
+
+  referenceType LedgerReferenceType @map("reference_type")
+  referenceId   String?             @map("reference_id") @db.VarChar(160)
+
+  idempotencyKey String? @unique @map("idempotency_key") @db.VarChar(180)
+
+  description String? @db.Text
+  metadata    Json?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, createdAt])
+  @@index([assetId, createdAt])
+  @@index([type])
+  @@index([referenceType, referenceId])
+  @@map("ledger_entries")
+}
+
+
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique @db.VarChar(255)
+  name         String   @db.VarChar(120)
+  passwordHash String?  @map("password_hash") @db.Text
+
+  balances     AccountBalance[]
+  ledgerEntries LedgerEntry[]
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+
+model Asset {
+  id       String    @id @default(uuid()) @db.Uuid
+  symbol   String    @unique @db.VarChar(20)
+  name     String    @db.VarChar(120)
+  type     AssetType
+  isActive Boolean   @default(true) @map("is_active")
+
+  baseTradingPairs  TradingPair[] @relation("BaseAsset")
+  quoteTradingPairs TradingPair[] @relation("QuoteAsset")
+  balances          AccountBalance[]
+  ledgerEntries     LedgerEntry[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([type])
+  @@index([isActive])
+  @@map("assets")
+}
+
+
+enum LedgerReferenceType {
+  SEED
+  ORDER
+  TRADE
+  SYSTEM
+}
+
+model TradingPair {
+  id           String  @id @default(uuid()) @db.Uuid
+  symbol       String  @unique @db.VarChar(40)
+
+  baseAssetId  String  @map("base_asset_id") @db.Uuid
+  quoteAssetId String  @map("quote_asset_id") @db.Uuid
+
+  baseAsset    Asset   @relation("BaseAsset", fields: [baseAssetId], references: [id], onDelete: Restrict)
+  quoteAsset   Asset   @relation("QuoteAsset", fields: [quoteAssetId], references: [id], onDelete: Restrict)
+
+  isActive     Boolean @default(true) @map("is_active")
+
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@unique([baseAssetId, quoteAssetId])
+  @@index([baseAssetId])
+  @@index([quoteAssetId])
+  @@index([isActive])
+  @@map("trading_pairs")
+}
+
+
+model AccountBalance {
+  id                String   @id @default(uuid()) @db.Uuid
+
+  userId            String   @map("user_id") @db.Uuid
+  assetId           String   @map("asset_id") @db.Uuid
+
+  availableQuantity Decimal  @default(0) @map("available_quantity") @db.Decimal(36, 18)
+  reservedQuantity  Decimal  @default(0) @map("reserved_quantity") @db.Decimal(36, 18)
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset             Asset    @relation(fields: [assetId], references: [id], onDelete: Restrict)
+
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, assetId])
+  @@index([userId])
+  @@index([assetId])
+  @@map("account_balances")
+}
+

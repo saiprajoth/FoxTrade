@@ -11,6 +11,11 @@ services:
       - "5432:5432"
     volumes:
       - foxtrade_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U foxtrade -d foxtrade"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7
@@ -20,6 +25,12 @@ services:
       - "6379:6379"
     volumes:
       - foxtrade_redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   foxtrade_postgres_data:
