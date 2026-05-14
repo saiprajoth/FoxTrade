@@ -155,11 +155,14 @@ In case the above link is not working, please find the demo of the application a
 
 ## Architecture Diagram:
 
-<img width="1448" height="1086" alt="6f04ec06-666b-433d-9b5f-450825b890d7" src="https://github.com/user-attachments/assets/ac6d853d-5627-4aae-af0f-0336957b04b8" />
+![Uploading 7e9568ee-3ce8-45f2-87d1-e63fda8694ef.png…]()
 
-## Architectural Design Record (ADR) :
+<img width="1491" height="1055" alt="f7e1d39b-4cb7-4f95-a9f1-9810e97abd2b" src="https://github.com/user-attachments/assets/a8673d6a-adbd-4748-9c1d-183696d97372" />
 
-- Please find the link for ADRs for the chessX Project attached below :
+
+## Architectural Design Records (ADRs) :
+
+- Please find the [FoxTrade Project ADRs](./docs/ADRs) documentation here
   
 ## TradeOffs evaluation :
 
